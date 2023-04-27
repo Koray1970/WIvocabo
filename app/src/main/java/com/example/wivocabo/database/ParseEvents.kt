@@ -1,45 +1,50 @@
 package com.example.wivocabo.database
 
+import android.content.Context
 import com.parse.ParseObject
 import com.parse.ParseQuery
-import java.util.Objects
-import java.util.UUID
+import android.content.res.Resources
+import com.example.wivocabo.R
 
 class ParseEvents {
-    fun RegisterUser(username: String, email: String, password: String): ParseEventResult<String> {
-        val parseEventResult = ParseEventResult<String>()
+    fun RegisterUser(context:Context, username: String, email: String, password: String): ParseEventResult<String> {
+        val dbuserclassname=  context.getString(R.string.pclass_user)
+        val parseEventResult = ParseEventResult<String>("")
         parseEventResult.eventResultFlag = EventResultFlag.FAILED
         try {
-            val userQuery = ParseQuery<ParseObject>("user")
-            userQuery.whereEqualTo("email", email)
-            userQuery.countInBackground { count, e ->
-                if (count > 0) {
-                    parseEventResult.errorcode="PRS010"
-                    parseEventResult.result= userQuery.first!!.get("objectId") as String
-                }
-                else{
-                    val user = ParseObject("user")
-                    user.put("username", username)
-                    user.put("email", email)
-                    user.put("password", password)
-                    user.save()
-                    userQuery.whereEqualTo("email", email)
-                    parseEventResult.result= userQuery.first!!.get("objectId") as String
-                    parseEventResult.eventResultFlag = EventResultFlag.SUCCESS
-                }
+            val userQuery = ParseQuery.getQuery<ParseObject>(dbuserclassname)
+            var hasemail= userQuery.whereEqualTo("email", email)
+            if(hasemail.count()>0){
+                parseEventResult.errorcode = "PRS010"
+                parseEventResult.resultSet(hasemail.first.objectId)
             }
-        } catch (exception: Exception) {
+            else{
+                val user = ParseObject(dbuserclassname)
+                user.put("username", username)
+                user.put("email", email)
+                user.put("password", password)
+                user.save()
+                parseEventResult.resultSet(user.objectId)
+                parseEventResult.eventResultFlag = EventResultFlag.SUCCESS
+            }
 
+        } catch (exception: Exception) {
+            parseEventResult.exception=exception.message.toString()
         }
         return parseEventResult
     }
 }
 
-class ParseEventResult<T> {
+class ParseEventResult<T>(private var iValue: T) {
     lateinit var eventResultFlag: EventResultFlag
     lateinit var errorcode: String
     lateinit var exception: String
-    var result: T = TODO()
+    fun resultGet():T{
+        return iValue
+    }
+    fun resultSet(input:T){
+        iValue=input
+    }
 }
 
 enum class EventResultFlag {
