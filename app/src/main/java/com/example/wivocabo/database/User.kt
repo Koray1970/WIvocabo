@@ -25,8 +25,11 @@ data class User(
 
 @Dao
 interface UserDao {
-    @Query("SELECT id,email,password,objectId FROM users WHERE id=:id")
-    fun getUser(id: Int): User
+    @Query("SELECT id,email,password,objectId FROM users WHERE email=:email")
+    fun getUser(email:String): User
+
+    @Query("SELECT COUNT(*) FROM users LIMIT 1")
+    fun countOfUser(): Int
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertUser(user: User)

@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">WIvocabo</string>
+    <string name="localdatabase">ivocabodb.db</string>
+    <string name="submit">Submit</string>
+    <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
     <!--start::parse db credetials-->
     <string name="back4app_server_url">https://parseapi.back4app.com/</string>
     <string name="back4app_app_id">6OeFz5FXnW7YSzpgybpMHW7AZjcy8ae23hFuhvI8</string>
@@ -12,7 +16,7 @@
     <string name="username">Username</string>
     <string name="email">E-mail</string>
     <string name="password">Password</string>
-    <string name="submit">Submit</string>
+
     <string name="formelementisempty">Please don not leave empty!</string>
     <!--end::registration form details-->
     <!--start::parse db class names-->
@@ -21,4 +25,17 @@
     <string name="pclass_missingbeacons">MissingBeacons</string>
     <string name="pclass_trackarchive">TrackArchive</string>
     <!--end::parse db class names-->
+    <!--start::login form-->
+    <string name="signin_title">Sign-in Form</string>
+    <string name="signin_button">Sign-in</string>
+    <string name="signin_forgetpassword_button">I forget my password.</string>
+    <!--end::login form-->
+    <!--start::dashboard add device-->
+    <string name="dmn_adddevice">Add Device</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="dfrm_title">Add New Device</string>
+    <string name="macaddress">Mac Address</string>
+    <string name="dfrm_devicename">Device Name</string>
+    <!--start::dashboard add device-->
 </resources>
