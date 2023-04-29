@@ -24,7 +24,7 @@ class Register : AppCompatActivity() {
             applicationContext,
             AppDatabase::class.java,
             "ivocabodb.db"
-        ).build()
+        ).fallbackToDestructiveMigration().build()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -37,5 +37,12 @@
     <string name="dfrm_title">Add New Device</string>
     <string name="macaddress">Mac Address</string>
     <string name="dfrm_devicename">Device Name</string>
+
+    <string description="a transient text that appears on screen when a card is dismissed [CHAR LIMIT=30]"
+        name="cat_card_dismissed">Card Dismissed</string>
+    <string description="A label in a button to dismiss the last action [CHAR LIMIT=15]"
+        name="cat_card_undo">Undo</string>
+    <string description="A label in a button to dismiss the last action [CHAR LIMIT=30]"
+        name="cat_card_swipe_to_dismiss">Swipe this card to dismiss it</string>
     <!--start::dashboard add device-->
 </resources>

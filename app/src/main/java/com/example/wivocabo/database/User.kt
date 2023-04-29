@@ -1,6 +1,7 @@
 package com.example.wivocabo.database
 
 import android.content.Context
+import androidx.room.AutoMigration
 import androidx.room.ColumnInfo
 import androidx.room.Dao
 import androidx.room.Database
@@ -22,7 +23,15 @@ data class User(
     @ColumnInfo(name = "password") val password: String?,
     @ColumnInfo(name = "objectId") val objectId: String?
 )
-
+@Entity(tableName = "beacons")
+data class Beacon(
+    @PrimaryKey(autoGenerate = true) var id: Int = 0,
+    @ColumnInfo(name = "latitude") val latitude: Double?,
+    @ColumnInfo(name = "longitude") val longitude: Double?,
+    @ColumnInfo(name = "mac") val mac: String?,
+    @ColumnInfo(name = "name") val name: String?,
+    @ColumnInfo(name = "objectId") val objectId: String?
+)
 @Dao
 interface UserDao {
     @Query("SELECT id,email,password,objectId FROM users WHERE email=:email")
@@ -40,35 +49,26 @@ interface UserDao {
     @Delete
     fun deleteUser(vararg user: User)
 }
+@Dao
+interface BeaconsDao {
+    @Query("SELECT * FROM beacons WHERE mac=:mac")
+    fun getBeacon(mac:String): Beacon
 
-@Database(entities = [User::class], version = 1)
+    @Query("SELECT * FROM beacons")
+    fun beaconList(): MutableList<Beacon>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertBeacon(beacon: Beacon)
+
+    @Update
+    fun updateBeacon(vararg beacon: Beacon)
+
+    @Delete
+    fun deleteBeacon(vararg beacon: Beacon)
+}
+@Database(entities = [User::class,Beacon::class], version = 2)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao
-
-    /*companion object {
-        @Volatile
-        private var INSTANCE: AppDatabase? = null
-
-        fun getDatabase(context: Context): AppDatabase {
-            // if the INSTANCE is not null, then return it,
-            // if it is, then create the database
-            if (INSTANCE == null) {
-                synchronized(this) {
-                    // Pass the database to the INSTANCE
-                    INSTANCE = buildDatabase(context)
-                }
-            }
-            // Return database.
-            return INSTANCE!!
-        }
-
-        private fun buildDatabase(context: Context): AppDatabase {
-            return Room.databaseBuilder(
-                context.applicationContext,
-                AppDatabase::class.java,
-                "ivocabodb"
-            ).build()
-        }
-    }*/
+    abstract fun beaconsDao():BeaconsDao
 }
 

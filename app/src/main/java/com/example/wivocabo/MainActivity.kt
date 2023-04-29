@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
             applicationContext,
             AppDatabase::class.java,
             "ivocabodb.db"
-        ).build()
+        ).fallbackToDestructiveMigration().build()
     }
     private lateinit var dbUserDao:UserDao
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
     }
     private fun goToRegisterForm(){
         innerIntent= Intent(this,Register::class.java)
-        startActivity(intent)
+        startActivity(innerIntent)
     }
     private fun goToLoginForm(){
         val intentloginform = Intent(this@MainActivity, Login::class.java)
