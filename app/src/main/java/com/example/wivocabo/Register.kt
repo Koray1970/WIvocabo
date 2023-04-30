@@ -1,5 +1,6 @@
 package com.example.wivocabo
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -55,7 +56,8 @@ class Register : AppCompatActivity() {
                     val user = User(0, _username, _email, _password, _objectid)
                     CoroutineScope(Dispatchers.IO).launch {
                         dbUserDao.insertUser(user)
-                        Log.v(TAG, "OK")
+                        val goToDashboard=Intent(this@Register,Dashboard::class.java)
+                        startActivity(goToDashboard)
                     }
 
                 } catch (exception: Exception) {
