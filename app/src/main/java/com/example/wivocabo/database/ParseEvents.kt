@@ -22,7 +22,7 @@ class ParseEvents {
         val parseEventResult = ParseEventResult<String>("")
         parseEventResult.eventResultFlag = EventResultFlag.FAILED
         try {
-            if(ParseUser.getCurrentUser()!=null)
+            if (ParseUser.getCurrentUser() != null)
                 ParseUser.logOut()
             val user = ParseUser()
             user.setPassword(password)
@@ -30,12 +30,11 @@ class ParseEvents {
             user.email = email
 
             user.signUp()
-            if(!user.objectId.isNullOrEmpty()){
+            if (!user.objectId.isNullOrEmpty()) {
                 Log.d(TAG, "Object saved.")
                 parseEventResult.resultSet(user.objectId)
                 parseEventResult.eventResultFlag = EventResultFlag.SUCCESS
-            }
-            else{
+            } else {
                 ParseUser.logOut();
                 Log.e(TAG, "Object not saved.")
             }
@@ -50,6 +49,36 @@ class ParseEvents {
             parseEventResult.exception = exception.message.toString()
         }
 
+        return parseEventResult
+    }
+
+    fun AddBeacon(
+        context: Context,
+        latitude: String,
+        longitude: String,
+        macaddress: String,
+        devicename: String,
+        parseuserid: String
+    ):ParseEventResult<String> {
+        val parseEventResult = ParseEventResult<String>("")
+        parseEventResult.eventResultFlag = EventResultFlag.FAILED
+        try{
+            val parseObject=ParseObject("Beacons")
+            parseObject.put("latitude",latitude)
+            parseObject.put("mac",macaddress)
+            parseObject.put("longitude",longitude)
+            parseObject.put("parseUserId",parseuserid)
+            parseObject.put("devicename",devicename)
+            parseObject.save()
+            if(parseObject.isDataAvailable("objectId")){
+                parseEventResult.eventResultFlag=EventResultFlag.SUCCESS
+                parseEventResult.resultSet(parseObject.objectId)
+            }
+
+        }
+        catch (exception:Exception){
+            parseEventResult.exception=exception.message.toString()
+        }
         return parseEventResult
     }
 }

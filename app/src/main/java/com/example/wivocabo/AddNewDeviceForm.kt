@@ -4,18 +4,54 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.room.Room
+import com.example.wivocabo.database.AppDatabase
+import com.example.wivocabo.database.Beacon
+import com.example.wivocabo.database.BeaconsDao
+import com.example.wivocabo.database.EventResultFlag
+import com.example.wivocabo.database.ParseEvents
 import com.example.wivocabo.databinding.FragmentAddNewDeviceFormBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.parse.ParseUser
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 class AddNewDeviceForm : BottomSheetDialogFragment() {
     private lateinit var binding:FragmentAddNewDeviceFormBinding
+    private val appDatabase by lazy {
+        activity?.let {
+            Room.databaseBuilder(
+                it.applicationContext,
+                AppDatabase::class.java,
+                "ivocabodb.db"
+            ).fallbackToDestructiveMigration().build()
+        }
+    }
+    private lateinit var beaconsDao: BeaconsDao
+    private lateinit var beacon:Beacon
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val activity=requireActivity()
         binding.saveButton.setOnClickListener {
             if(validateFormElements()) {
-                this.dismiss()
+                beaconsDao= appDatabase?.beaconsDao()!!
+                var macaddress=binding.devicemacaddress.editText?.text.toString()
+                var devicename=binding.devicename.editText?.text.toString()
+                val parseEvents=ParseEvents()
+                val parseresult=parseEvents.AddBeacon(activity.applicationContext,"0.0","0.0",macaddress,devicename,ParseUser.getCurrentUser().objectId)
+                if(parseresult.eventResultFlag==EventResultFlag.SUCCESS) {
+                    CoroutineScope(Dispatchers.IO).launch {
+                        beacon = Beacon(0, 0.0, 0.0, macaddress, devicename, "0")
+                        beaconsDao.insertBeacon(beacon)
+                    }
+                    this.dismiss()
+                }
+                else{
+                    Toast.makeText(activity.applicationContext,"Something goes wrong!!",Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }

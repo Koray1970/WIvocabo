@@ -1,39 +1,37 @@
-package com.example.wivocabo.database
+package com.example.wivocabo
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Adapter
-import android.widget.TextView
 import androidx.coordinatorlayout.widget.CoordinatorLayout
-import androidx.recyclerview.widget.RecyclerView
-import com.example.wivocabo.R
+import androidx.coordinatorlayout.widget.CoordinatorLayout.LayoutParams
+import androidx.fragment.app.Fragment
+import com.example.wivocabo.databinding.FragmentCardSwipeBinding
 import com.google.android.material.behavior.SwipeDismissBehavior
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.snackbar.Snackbar
 
-class DeviceListAdapter(val devicelist: MutableList<Beacon>) :
-    RecyclerView.Adapter<DeviceListAdapter.ViewHolder>() {
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val macaddress:TextView=view.findViewById(R.id.swipecard_context_text)
+class CardSwipeFragment : Fragment() {
+    private lateinit var binding: FragmentCardSwipeBinding
 
-        fun bindItems(item: Beacon) {
-            macaddress.text=item.mac
-        }
-    }
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view=LayoutInflater.from(parent.context).inflate(R.layout.fragment_card_swipe,parent,false)
-        val swipeDismissBehavior= SwipeDismissBehavior<View>()
+        binding = FragmentCardSwipeBinding.inflate(layoutInflater)
+
+        /*val swipeDismissBehavior=SwipeDismissBehavior<View>()
         swipeDismissBehavior.setSwipeDirection(SwipeDismissBehavior.SWIPE_DIRECTION_START_TO_END)
-        val cardContentLayout=view.findViewById<MaterialCardView>(R.id.swipecard_content_layout)
+        val cardContentLayout=binding.swipecardContentLayout
 
-        val coordinatorlayoutParams=cardContentLayout.layoutParams as CoordinatorLayout.LayoutParams
+        val coordinatorlayoutParams=binding.swipecardContentLayout.layoutParams as LayoutParams
         coordinatorlayoutParams.behavior=swipeDismissBehavior
 
         swipeDismissBehavior.listener = object : SwipeDismissBehavior.OnDismissListener {
             override fun onDismiss(view: View) {
-                Snackbar.make(parent.rootView!!, R.string.cat_card_dismissed, Snackbar.LENGTH_INDEFINITE)
+                Snackbar.make(container!!, R.string.cat_card_dismissed, Snackbar.LENGTH_INDEFINITE)
                     .setAction(R.string.cat_card_undo) { v ->
                         resetCard(cardContentLayout)
                     }.show()
@@ -42,20 +40,12 @@ class DeviceListAdapter(val devicelist: MutableList<Beacon>) :
             override fun onDragStateChanged(state: Int) {
                 onDragStateChanged(state, cardContentLayout)
             }
-        }
+        }*/
 
 
-
-        return ViewHolder(view)
+        return binding.swipecardContentLayout
     }
-
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bindItems(devicelist.get(position))
-    }
-
-    override fun getItemCount(): Int = devicelist.size
-
-    private fun onDragStateChanged(state:Int,cardContentLayout:MaterialCardView){
+    /*private fun onDragStateChanged(state:Int,cardContentLayout:MaterialCardView){
         when(state){
             SwipeDismissBehavior.STATE_DRAGGING,SwipeDismissBehavior.STATE_SETTLING->cardContentLayout.isDragged=true
             SwipeDismissBehavior.STATE_IDLE-> cardContentLayout.isDragged=false
@@ -66,6 +56,6 @@ class DeviceListAdapter(val devicelist: MutableList<Beacon>) :
         params.setMargins(0,0,0,0)
         cardContentLayout.alpha=1.0f
         cardContentLayout.requestLayout()
-    }
+    }*/
 
 }

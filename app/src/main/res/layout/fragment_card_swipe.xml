@@ -2,10 +2,9 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/swipecard_container"
+    android:id="@+id/card_container"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="16dp"
+    android:layout_height="wrap_content"
     android:clipChildren="false"
     android:clipToPadding="false">
 
@@ -13,13 +12,18 @@
         android:id="@+id/swipecard_content_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:focusable="true"
+        android:layout_marginBottom="8dp"
         android:minHeight="60dp"
-       >
+        app:contentPadding="@dimen/cat_card_content_padding"
+        app:cardCornerRadius="0dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:checkable="true"
+        app:checkedIcon="@drawable/baseline_check_circle_outline_24"
+        >
         <TextView
             android:id="@+id/swipecard_context_text"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/cat_card_swipe_to_dismiss"

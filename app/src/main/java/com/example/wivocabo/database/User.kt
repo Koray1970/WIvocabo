@@ -41,6 +41,7 @@ data class MissingBeacon(
     @ColumnInfo(name = "latitude") val latitude: Double?,
     @ColumnInfo(name = "longitude") val longitude: Double?,
     @ColumnInfo(name = "mac") val mac: String?,
+    @ColumnInfo(name = "devicename") val devicename: String?,
     @ColumnInfo(name = "parcebeaconId") val parcebeaconid: String?
 )
 @Entity(tableName = "trackarchive")
