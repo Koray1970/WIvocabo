@@ -35,12 +35,6 @@
             android:contentDescription="@string/dmn_adddevice"
             android:text="@string/dmn_adddevice"
             app:icon="@drawable/baseline_playlist_add_device_24" />
-<!--<fragment
-    android:name="com.example.wivocabo.CardSwipeDismissFragment"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-
-    ></fragment>-->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvwdevicelist"
             android:layout_width="match_parent"

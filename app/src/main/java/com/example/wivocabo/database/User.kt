@@ -15,7 +15,6 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.room.Update
-import java.sql.Date
 
 @Entity(tableName = "users")
 data class User(

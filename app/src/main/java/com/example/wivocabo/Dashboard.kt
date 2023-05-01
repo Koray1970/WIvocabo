@@ -17,6 +17,7 @@ import kotlinx.coroutines.launch
 class Dashboard : AppCompatActivity() {
     private val TAG = Dashboard::class.java.simpleName
     private lateinit var binding: ActivityDashboardBinding
+    private lateinit var deviceListAdapter: DeviceListAdapter
     private val appDatabase by lazy {
         Room.databaseBuilder(
             applicationContext,
@@ -39,8 +40,11 @@ class Dashboard : AppCompatActivity() {
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         CoroutineScope(Dispatchers.IO).launch {
             beaconlist = beaconsDao.beaconList()
-            if (!beaconlist.isEmpty())
-                binding.rvwdevicelist.adapter = DeviceListAdapter(beaconlist)
+            if (!beaconlist.isEmpty()) {
+                deviceListAdapter= DeviceListAdapter(beaconlist, applicationContext)
+                binding.rvwdevicelist.adapter =deviceListAdapter
+                deviceListAdapter.notifyDataSetChanged()
+            }
         }
     }
 

@@ -5,29 +5,68 @@
     android:id="@+id/card_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/danger"
+    android:layout_marginBottom="8dp"
     android:clipChildren="false"
     android:clipToPadding="false">
-
+    <ImageView
+        android:id="@+id/deletecardicon"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:visibility="visible"
+        android:layout_marginLeft="20dp"
+        android:layout_gravity="left|center"
+        android:src="@drawable/baseline_delete_24"></ImageView>
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/swipecard_content_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+
         android:minHeight="60dp"
         app:contentPadding="@dimen/cat_card_content_padding"
         app:cardCornerRadius="0dp"
         android:clickable="true"
         android:focusable="true"
         android:checkable="true"
+        android:background="@color/yellow"
+        app:cardBackgroundColor="@color/yellow"
         app:checkedIcon="@drawable/baseline_check_circle_outline_24"
         >
-        <TextView
-            android:id="@+id/swipecard_context_text"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/cat_card_swipe_to_dismiss"
-            android:textAppearance="?attr/textAppearanceBody1"/>
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/baseline_bluetooth_24"></ImageView>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/swipecard_context_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Device Name"
+                    android:textAppearance="?attr/textAppearanceHeadline6"/>
+                <TextView
+                    android:id="@+id/swipecard_context_macaddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="XX:XX:XX:XX:XX:XX"
+                    android:textAppearance="?attr/textAppearanceLabelSmall"/>
+                <TextView
+                    android:id="@+id/swipecard_context_data"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="invisible"
+                    />
+            </LinearLayout>
+        </LinearLayout>
+
 
     </com.google.android.material.card.MaterialCardView>
 

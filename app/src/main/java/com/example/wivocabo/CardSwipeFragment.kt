@@ -49,6 +49,7 @@ class CardSwipeFragment : Fragment() {
         when(state){
             SwipeDismissBehavior.STATE_DRAGGING,SwipeDismissBehavior.STATE_SETTLING->cardContentLayout.isDragged=true
             SwipeDismissBehavior.STATE_IDLE-> cardContentLayout.isDragged=false
+            card
         }
     }
     private fun resetCard(cardContentLayout: MaterialCardView){

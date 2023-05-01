@@ -5,6 +5,7 @@ import com.parse.ParseObject
 import com.parse.ParseQuery
 import android.content.res.Resources
 import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import com.example.wivocabo.R
 import com.parse.ParseUser
 import com.parse.SignUpCallback
@@ -81,7 +82,36 @@ class ParseEvents {
         }
         return parseEventResult
     }
+    fun GetBeaconObject(macaddress:String):ParseObject?{
+        try{
+            val parseQuery=ParseQuery<ParseObject>("Beacons")
+            return  parseQuery.whereEqualTo("mac",macaddress).first
+        }
+        catch (exception:Exception){
+
+        }
+        return null
+    }
+    fun DeleteBeacon(macaddress: String):ParseEventResult<String> {
+        val parseEventResult = ParseEventResult<String>("")
+        parseEventResult.eventResultFlag = EventResultFlag.FAILED
+        try{
+            var parseObject=GetBeaconObject(macaddress)
+            parseObject?.deleteInBackground{ e->
+                if(e==null){
+                    parseEventResult.eventResultFlag=EventResultFlag.SUCCESS
+                } else{
+                    parseEventResult.exception="Parse Exception : "+e.message!!
+                }
+            }
+        }
+        catch (exception:Exception){
+            parseEventResult.exception=exception.message.toString()
+        }
+        return parseEventResult
+    }
 }
+
 
 class ParseEventResult<T>(private var iValue: T) {
     lateinit var eventResultFlag: EventResultFlag

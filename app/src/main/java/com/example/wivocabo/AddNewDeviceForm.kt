@@ -5,10 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
 import com.example.wivocabo.database.AppDatabase
 import com.example.wivocabo.database.Beacon
 import com.example.wivocabo.database.BeaconsDao
+import com.example.wivocabo.database.DeviceListAdapter
 import com.example.wivocabo.database.EventResultFlag
 import com.example.wivocabo.database.ParseEvents
 import com.example.wivocabo.databinding.FragmentAddNewDeviceFormBinding
@@ -46,6 +48,9 @@ class AddNewDeviceForm : BottomSheetDialogFragment() {
                     CoroutineScope(Dispatchers.IO).launch {
                         beacon = Beacon(0, 0.0, 0.0, macaddress, devicename, "0")
                         beaconsDao.insertBeacon(beacon)
+                        val recycleview=Dashboard().findViewById<RecyclerView>(R.id.rvwdevicelist)
+                        recycleview.adapter= DeviceListAdapter(beaconsDao.beaconList(),requireActivity().applicationContext)
+
                     }
                     this.dismiss()
                 }

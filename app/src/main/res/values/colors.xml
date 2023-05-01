@@ -6,4 +6,5 @@
     <color name="warning">#FFCC00</color>
     <color name="warning80">#FFFF99</color>
     <color name="danger">#FF0000</color>
+    <color name="yellow">#E6F542</color>
 </resources>
